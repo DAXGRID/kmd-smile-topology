@@ -1,0 +1,167 @@
+openapi: 3.0.1
+info:
+  title: generate-open-api-spec
+  version: '1.0'
+paths: {}
+components:
+  schemas:
+    ChangeSetMember:
+      type: object
+      additionalProperties: false
+    DataSetMember:
+      type: object
+      properties:
+        mRID:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        targetObject:
+          $ref: '#/components/schemas/TargetObject'
+        change:
+          $ref: '#/components/schemas/ChangeSetMember'
+        reverseChange:
+          $ref: '#/components/schemas/ObjectReverseModification'
+      additionalProperties: false
+    EquipmentContainer:
+      type: object
+      properties:
+        mRID:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        kind:
+          $ref: '#/components/schemas/EquipmentContainerKind'
+      additionalProperties: false
+    EquipmentContainerKind:
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      format: int32
+    IdentifiedObject:
+      type: object
+      properties:
+        mRID:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ObjectCreation:
+      type: object
+      properties:
+        object:
+          $ref: '#/components/schemas/IdentifiedObject'
+      additionalProperties: false
+    ObjectDeletion:
+      type: object
+      additionalProperties: false
+    ObjectModification:
+      type: object
+      properties:
+        modifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyModification'
+          nullable: true
+      additionalProperties: false
+    ObjectReverseModification:
+      type: object
+      properties:
+        modifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyModification'
+          nullable: true
+      additionalProperties: false
+    PropertyModification:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        value:
+          nullable: true
+      additionalProperties: false
+    TargetObject:
+      type: object
+      properties:
+        referenceType:
+          type: string
+          nullable: true
+        ref:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TopologyDirectedLink:
+      type: object
+      properties:
+        mRID:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        parent:
+          $ref: '#/components/schemas/TopologyNode'
+        child:
+          $ref: '#/components/schemas/TopologyNode'
+        switchStatus:
+          $ref: '#/components/schemas/TopologyDirectedLinkSwitchStatusKind'
+      additionalProperties: false
+    TopologyDirectedLinkSwitchStatusKind:
+      enum:
+        - 1
+        - 2
+      type: integer
+      format: int32
+    TopologyNode:
+      type: object
+      properties:
+        mRID:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        equipmentContainer:
+          $ref: '#/components/schemas/EquipmentContainer'
+        baseVoltage:
+          type: integer
+          format: int32
+        kind:
+          $ref: '#/components/schemas/TopologyNodeKind'
+        wgs84longitude:
+          type: number
+          format: double
+        wgs84latitude:
+          type: number
+          format: double
+      additionalProperties: false
+    TopologyNodeKind:
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      format: int32
+    UsagePoint:
+      type: object
+      properties:
+        mRID:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        topologyNode:
+          $ref: '#/components/schemas/TopologyNode'
+      additionalProperties: false
