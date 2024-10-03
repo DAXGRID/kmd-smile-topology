@@ -38,12 +38,11 @@ components:
       additionalProperties: false
     EquipmentContainerKind:
       enum:
-        - 1
-        - 2
-        - 3
-        - 4
-      type: integer
-      format: int32
+        - PrimarySubstation
+        - SecondarySubstation
+        - CableBox
+        - Tower
+      type: string
     IdentifiedObject:
       type: object
       properties:
@@ -118,10 +117,9 @@ components:
       additionalProperties: false
     TopologyDirectedLinkSwitchStatusKind:
       enum:
-        - 1
-        - 2
-      type: integer
-      format: int32
+        - Normal
+        - Actual
+      type: string
     TopologyNode:
       type: object
       properties:
@@ -147,12 +145,11 @@ components:
       additionalProperties: false
     TopologyNodeKind:
       enum:
-        - 1
-        - 2
-        - 3
-        - 4
-      type: integer
-      format: int32
+        - ExternalNetworkInjection
+        - PowerTransformer
+        - BusbarSection
+        - FeederBay
+      type: string
     UsagePoint:
       type: object
       properties:
