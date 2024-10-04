@@ -7,12 +7,17 @@ components:
   schemas:
     ChangeSetMember:
       type: object
+      properties:
+        $type:
+          type: string
       additionalProperties: false
     DataSetMember:
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
         - type: object
           properties:
+            $type:
+              type: string
             targetObject:
               $ref: '#/components/schemas/TargetObject'
             change:
@@ -38,6 +43,8 @@ components:
     IdentifiedObject:
       type: object
       properties:
+        $type:
+          type: string
         mRID:
           type: string
           nullable: true
@@ -52,6 +59,8 @@ components:
           properties:
             object:
               $ref: '#/components/schemas/IdentifiedObject'
+              $type:
+                type: string
           additionalProperties: false
     ObjectDeletion:
       allOf:
@@ -83,6 +92,8 @@ components:
     PropertyModification:
       type: object
       properties:
+        $type:
+          type: string
         name:
           type: string
           nullable: true
@@ -92,6 +103,8 @@ components:
     TargetObject:
       type: object
       properties:
+        $type:
+          type: string
         referenceType:
           type: string
           nullable: true
