@@ -70,13 +70,15 @@ components:
                 nullable: true
       additionalProperties: false
     ObjectReverseModification:
-      type: object
-      properties:
-        modifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyModification'
-          nullable: true
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          properties:
+            modifications:
+              type: array
+              items:
+                $ref: '#/components/schemas/PropertyModification'
+                nullable: true
       additionalProperties: false
     PropertyModification:
       type: object
