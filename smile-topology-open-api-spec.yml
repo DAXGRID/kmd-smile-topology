@@ -59,13 +59,15 @@ components:
         - type: object
       additionalProperties: false
     ObjectModification:
-      type: object
-      properties:
-        modifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyModification'
-          nullable: true
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          properties:
+            modifications:
+              type: array
+              items:
+                $ref: '#/components/schemas/PropertyModification'
+                nullable: true
       additionalProperties: false
     ObjectReverseModification:
       type: object
