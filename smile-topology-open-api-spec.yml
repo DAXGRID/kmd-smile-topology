@@ -54,7 +54,9 @@ components:
               $ref: '#/components/schemas/IdentifiedObject'
       additionalProperties: false
     ObjectDeletion:
-      type: object
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
       additionalProperties: false
     ObjectModification:
       type: object
