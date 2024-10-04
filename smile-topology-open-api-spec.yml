@@ -9,21 +9,17 @@ components:
       type: object
       additionalProperties: false
     DataSetMember:
-      type: object
-      properties:
-        mRID:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        targetObject:
-          $ref: '#/components/schemas/TargetObject'
-        change:
-          $ref: '#/components/schemas/ChangeSetMember'
-        reverseChange:
-          $ref: '#/components/schemas/ObjectReverseModification'
-      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedObject'
+        - type: object
+          properties:
+            targetObject:
+              $ref: '#/components/schemas/TargetObject'
+            change:
+              $ref: '#/components/schemas/ChangeSetMember'
+            reverseChange:
+              $ref: '#/components/schemas/ObjectReverseModification'
+          additionalProperties: false
     EquipmentContainer:
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
