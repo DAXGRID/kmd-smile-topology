@@ -46,10 +46,12 @@ components:
           nullable: true
       additionalProperties: false
     ObjectCreation:
-      type: object
-      properties:
-        object:
-          $ref: '#/components/schemas/IdentifiedObject'
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/IdentifiedObject'
       additionalProperties: false
     ObjectDeletion:
       type: object
