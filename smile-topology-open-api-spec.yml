@@ -25,17 +25,13 @@ components:
           $ref: '#/components/schemas/ObjectReverseModification'
       additionalProperties: false
     EquipmentContainer:
-      type: object
-      properties:
-        mRID:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        kind:
-          $ref: '#/components/schemas/EquipmentContainerKind'
-      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedObject'
+        - type: object
+          properties:
+            kind:
+              $ref: '#/components/schemas/EquipmentContainerKind'
+          additionalProperties: false
     EquipmentContainerKind:
       enum:
         - PrimarySubstation
@@ -100,49 +96,41 @@ components:
           nullable: true
       additionalProperties: false
     TopologyDirectedLink:
-      type: object
-      properties:
-        mRID:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        parent:
-          $ref: '#/components/schemas/TopologyNode'
-        child:
-          $ref: '#/components/schemas/TopologyNode'
-        switchStatus:
-          $ref: '#/components/schemas/TopologyDirectedLinkSwitchStatusKind'
-      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedObject'
+        - type: object
+          properties:
+            parent:
+              $ref: '#/components/schemas/TopologyNode'
+            child:
+              $ref: '#/components/schemas/TopologyNode'
+            switchStatus:
+              $ref: '#/components/schemas/TopologyDirectedLinkSwitchStatusKind'
+          additionalProperties: false
     TopologyDirectedLinkSwitchStatusKind:
       enum:
         - Normal
         - Actual
       type: string
     TopologyNode:
-      type: object
-      properties:
-        mRID:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        equipmentContainer:
-          $ref: '#/components/schemas/EquipmentContainer'
-        baseVoltage:
-          type: integer
-          format: int32
-        kind:
-          $ref: '#/components/schemas/TopologyNodeKind'
-        wgs84longitude:
-          type: number
-          format: double
-        wgs84latitude:
-          type: number
-          format: double
-      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedObject'
+        - type: object
+          properties:
+            equipmentContainer:
+              $ref: '#/components/schemas/EquipmentContainer'
+            baseVoltage:
+              type: integer
+              format: int32
+            kind:
+              $ref: '#/components/schemas/TopologyNodeKind'
+            wgs84longitude:
+              type: number
+              format: double
+            wgs84latitude:
+              type: number
+              format: double
+          additionalProperties: false
     TopologyNodeKind:
       enum:
         - ExternalNetworkInjection
@@ -151,14 +139,10 @@ components:
         - FeederBay
       type: string
     UsagePoint:
-      type: object
-      properties:
-        mRID:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        topologyNode:
-          $ref: '#/components/schemas/TopologyNode'
-      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedObject'
+        - type: object
+          properties:
+            topologyNode:
+              $ref: '#/components/schemas/TopologyNode'
+          additionalProperties: false
