@@ -1,0 +1,274 @@
+[
+  {
+    "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+    "kind": 2,
+    "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+    "name": "Test station 1"
+  },
+  {
+    "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+    "EquipmentContainer": {
+      "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+      "kind": 2,
+      "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+      "name": "Test station 1"
+    },
+    "baseVoltage": 10000,
+    "kind": 3,
+    "wgs84longitude": 0.0,
+    "wgs84latitude": 0.0,
+    "mRID": "3de10578-39a8-476b-ba1f-5d91c44432aa",
+    "name": "1"
+  },
+  {
+    "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+    "EquipmentContainer": {
+      "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+      "kind": 2,
+      "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+      "name": "Test station 1"
+    },
+    "baseVoltage": 400,
+    "kind": 3,
+    "wgs84longitude": 0.0,
+    "wgs84latitude": 0.0,
+    "mRID": "9dc8c465-7fd0-42f7-9248-998fbab15a80",
+    "name": "2"
+  },
+  {
+    "$type": "Smile.Topology.TopologyDirectedLink, kmd-smilo-topology",
+    "parent": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 10000,
+      "kind": 3,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "3de10578-39a8-476b-ba1f-5d91c44432aa",
+      "name": "1"
+    },
+    "child": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 10000,
+      "kind": 2,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "345786e1-83a3-4e60-aea0-3c3f547a3aae",
+      "name": "1"
+    },
+    "switchStatus": 1,
+    "mRID": "7b7899cb-c55f-4401-bf79-bb3adf0bd8d3",
+    "name": null
+  },
+  {
+    "$type": "Smile.Topology.TopologyDirectedLink, kmd-smilo-topology",
+    "parent": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 10000,
+      "kind": 2,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "345786e1-83a3-4e60-aea0-3c3f547a3aae",
+      "name": "1"
+    },
+    "child": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 400,
+      "kind": 3,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "9dc8c465-7fd0-42f7-9248-998fbab15a80",
+      "name": "2"
+    },
+    "switchStatus": 1,
+    "mRID": "ad30d96f-1e6e-4f5d-adb8-f4827c197e48",
+    "name": null
+  },
+  {
+    "$type": "Smile.Topology.TopologyDirectedLink, kmd-smilo-topology",
+    "parent": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 400,
+      "kind": 3,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "9dc8c465-7fd0-42f7-9248-998fbab15a80",
+      "name": "2"
+    },
+    "child": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 400,
+      "kind": 4,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "b57779c7-39ef-42fe-9f69-289ce535f500",
+      "name": "Bay 1"
+    },
+    "switchStatus": 1,
+    "mRID": "0d6d049c-1cb3-4149-8332-ba4ea89d234e",
+    "name": null
+  },
+  {
+    "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+    "kind": 3,
+    "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+    "name": "Test cablebox 1"
+  },
+  {
+    "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+    "EquipmentContainer": {
+      "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+      "kind": 3,
+      "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+      "name": "Test cablebox 1"
+    },
+    "baseVoltage": 400,
+    "kind": 3,
+    "wgs84longitude": 0.0,
+    "wgs84latitude": 0.0,
+    "mRID": "6a909e03-2ec0-46bc-8d31-a5e4cebc6e71",
+    "name": "1"
+  },
+  {
+    "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+    "EquipmentContainer": {
+      "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+      "kind": 3,
+      "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+      "name": "Test cablebox 1"
+    },
+    "baseVoltage": 400,
+    "kind": 4,
+    "wgs84longitude": 0.0,
+    "wgs84latitude": 0.0,
+    "mRID": "c4f3a101-38e6-4313-ba9d-82dde2ade8c0",
+    "name": "Bay 1"
+  },
+  {
+    "$type": "Smile.Topology.TopologyDirectedLink, kmd-smilo-topology",
+    "parent": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 3,
+        "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+        "name": "Test cablebox 1"
+      },
+      "baseVoltage": 400,
+      "kind": 3,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "6a909e03-2ec0-46bc-8d31-a5e4cebc6e71",
+      "name": "1"
+    },
+    "child": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 3,
+        "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+        "name": "Test cablebox 1"
+      },
+      "baseVoltage": 400,
+      "kind": 4,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "c4f3a101-38e6-4313-ba9d-82dde2ade8c0",
+      "name": "Bay 1"
+    },
+    "switchStatus": 1,
+    "mRID": "d9692979-61ed-4ee6-beab-e0c1b5f1b46e",
+    "name": null
+  },
+  {
+    "$type": "Smile.Topology.TopologyDirectedLink, kmd-smilo-topology",
+    "parent": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 2,
+        "mRID": "8e110c7e-7041-4b94-ab3b-491f51444a27",
+        "name": "Test station 1"
+      },
+      "baseVoltage": 400,
+      "kind": 4,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "b57779c7-39ef-42fe-9f69-289ce535f500",
+      "name": "Bay 1"
+    },
+    "child": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 3,
+        "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+        "name": "Test cablebox 1"
+      },
+      "baseVoltage": 400,
+      "kind": 3,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "6a909e03-2ec0-46bc-8d31-a5e4cebc6e71",
+      "name": "1"
+    },
+    "switchStatus": 1,
+    "mRID": "0b87058b-55f4-47c5-9bb5-6d7175abe8d1",
+    "name": null
+  },
+  {
+    "$type": "Smile.Topology.UsagePoint, kmd-smilo-topology",
+    "TopologyNode": {
+      "$type": "Smile.Topology.TopologyNode, kmd-smilo-topology",
+      "EquipmentContainer": {
+        "$type": "Smile.Topology.EquipmentContainer, kmd-smilo-topology",
+        "kind": 3,
+        "mRID": "8aec03ff-b989-4b77-8a07-02637ff43e65",
+        "name": "Test cablebox 1"
+      },
+      "baseVoltage": 400,
+      "kind": 4,
+      "wgs84longitude": 0.0,
+      "wgs84latitude": 0.0,
+      "mRID": "c4f3a101-38e6-4313-ba9d-82dde2ade8c0",
+      "name": "Bay 1"
+    },
+    "mRID": "8303201a-a20b-4e53-ad47-6c52a9bd7e93",
+    "name": "Test installation 1"
+  }
+]
