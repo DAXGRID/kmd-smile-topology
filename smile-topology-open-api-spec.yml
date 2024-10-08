@@ -19,7 +19,7 @@ components:
             $type:
               type: string
             targetObject:
-              $ref: '#/components/schemas/TargetObject'
+              type: string
             change:
               $ref: '#/components/schemas/ChangeSetMember'
             reverseChange:
@@ -100,27 +100,15 @@ components:
         value:
           nullable: true
       additionalProperties: false
-    TargetObject:
-      type: object
-      properties:
-        $type:
-          type: string
-        referenceType:
-          type: string
-          nullable: true
-        ref:
-          type: string
-          nullable: true
-      additionalProperties: false
     TopologyDirectedLink:
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
         - type: object
           properties:
             parent:
-              $ref: '#/components/schemas/TopologyNode'
+              type: string
             child:
-              $ref: '#/components/schemas/TopologyNode'
+              type: string
             switchStatus:
               $ref: '#/components/schemas/TopologyDirectedLinkSwitchStatusKind'
           additionalProperties: false
@@ -135,7 +123,7 @@ components:
         - type: object
           properties:
             equipmentContainer:
-              $ref: '#/components/schemas/EquipmentContainer'
+              type: string
             baseVoltage:
               type: integer
               format: int32
@@ -161,5 +149,5 @@ components:
         - type: object
           properties:
             topologyNode:
-              $ref: '#/components/schemas/TopologyNode'
+              type: string
           additionalProperties: false
