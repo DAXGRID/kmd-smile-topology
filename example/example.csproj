@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CIM.Cson" Version="0.3.0" />
     <PackageReference Include="newtonsoft.json" Version="13.0.3" />
   </ItemGroup>
 
