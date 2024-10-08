@@ -13,11 +13,18 @@ namespace Example.Model {
   [DataContract]
   public class DataSetMember : IdentifiedObject {
     /// <summary>
+    /// Gets or Sets Type
+    /// </summary>
+    [DataMember(Name="$type", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "$type")]
+    public string Type { get; set; }
+
+    /// <summary>
     /// Gets or Sets TargetObject
     /// </summary>
     [DataMember(Name="targetObject", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "targetObject")]
-    public TargetObject TargetObject { get; set; }
+    public string TargetObject { get; set; }
 
     /// <summary>
     /// Gets or Sets Change
@@ -41,6 +48,7 @@ namespace Example.Model {
     public override string ToString()  {
       var sb = new StringBuilder();
       sb.Append("class DataSetMember {\n");
+      sb.Append("  Type: ").Append(Type).Append("\n");
       sb.Append("  TargetObject: ").Append(TargetObject).Append("\n");
       sb.Append("  Change: ").Append(Change).Append("\n");
       sb.Append("  ReverseChange: ").Append(ReverseChange).Append("\n");

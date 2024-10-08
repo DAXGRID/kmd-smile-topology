@@ -13,6 +13,13 @@ namespace Example.Model {
   [DataContract]
   public class IdentifiedObject {
     /// <summary>
+    /// Gets or Sets Type
+    /// </summary>
+    [DataMember(Name="$type", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "$type")]
+    public string Type { get; set; }
+
+    /// <summary>
     /// Gets or Sets MRID
     /// </summary>
     [DataMember(Name="mRID", EmitDefaultValue=false)]
@@ -34,6 +41,7 @@ namespace Example.Model {
     public override string ToString()  {
       var sb = new StringBuilder();
       sb.Append("class IdentifiedObject {\n");
+      sb.Append("  Type: ").Append(Type).Append("\n");
       sb.Append("  MRID: ").Append(MRID).Append("\n");
       sb.Append("  Name: ").Append(Name).Append("\n");
       sb.Append("}\n");

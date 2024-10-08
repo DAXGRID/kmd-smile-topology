@@ -17,14 +17,14 @@ namespace Example.Model {
     /// </summary>
     [DataMember(Name="parent", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "parent")]
-    public TopologyNode Parent { get; set; }
+    public string Parent { get; set; }
 
     /// <summary>
     /// Gets or Sets Child
     /// </summary>
     [DataMember(Name="child", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "child")]
-    public TopologyNode Child { get; set; }
+    public string Child { get; set; }
 
     /// <summary>
     /// Gets or Sets SwitchStatus

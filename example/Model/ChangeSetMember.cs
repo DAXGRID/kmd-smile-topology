@@ -12,6 +12,13 @@ namespace Example.Model {
   /// </summary>
   [DataContract]
   public class ChangeSetMember {
+    /// <summary>
+    /// Gets or Sets Type
+    /// </summary>
+    [DataMember(Name="$type", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "$type")]
+    public string Type { get; set; }
+
 
     /// <summary>
     /// Get the string presentation of the object
@@ -20,6 +27,7 @@ namespace Example.Model {
     public override string ToString()  {
       var sb = new StringBuilder();
       sb.Append("class ChangeSetMember {\n");
+      sb.Append("  Type: ").Append(Type).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }

@@ -17,7 +17,7 @@ namespace Example.Model {
     /// </summary>
     [DataMember(Name="topologyNode", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "topologyNode")]
-    public TopologyNode TopologyNode { get; set; }
+    public string TopologyNode { get; set; }
 
 
     /// <summary>

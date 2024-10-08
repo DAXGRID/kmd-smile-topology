@@ -17,7 +17,7 @@ namespace Example.Model {
     /// </summary>
     [DataMember(Name="equipmentContainer", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "equipmentContainer")]
-    public EquipmentContainer EquipmentContainer { get; set; }
+    public string EquipmentContainer { get; set; }
 
     /// <summary>
     /// Gets or Sets BaseVoltage
