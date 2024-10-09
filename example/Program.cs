@@ -10,10 +10,11 @@ internal static class Program
 {
     public static void Main()
     {
-        var jsonLines1 = File.ReadAllLines("./example/data/smile_topology_delta_0_intial.jsonl");
-        var jsonLines2 = File.ReadAllLines("./example/data/smile_topology_delta_1_changes.jsonl");
-        var jsonLines3 = File.ReadAllLines("./kmd-smile-topology/example/data/smile_topology_delta_2_changes.jsonl");
-        var jsonLines4 = File.ReadAllLines("./kmd-smile-topology/example/data/smile_topology_delta_3_changes.jsonl");
+        var basePath = "/home/notation/projects/dax/kmd-smile-topology/example";
+        var jsonLines1 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_0_intial.jsonl");
+        var jsonLines2 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_1_changes.jsonl");
+        var jsonLines3 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_2_changes.jsonl");
+        var jsonLines4 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_3_changes.jsonl");
 
         var settings = new JsonSerializerSettings
         {
@@ -30,5 +31,19 @@ internal static class Program
             SerializationBinder = TypeNameAssemblyExcludingSerializationBinder.Instance,
             Binder = new ShortNameBinder(),
         };
+
+        void ProcessLines(IEnumerable<string> jsonLines)
+        {
+            foreach (var jsonLine in jsonLines1)
+            {
+                var identifiedModel = JsonConvert.DeserializeObject<IdentifiedObject>(jsonLine, settings);
+                Console.WriteLine(JsonConvert.SerializeObject(identifiedModel));
+            }
+        }
+
+        ProcessLines(jsonLines1);
+        ProcessLines(jsonLines2);
+        ProcessLines(jsonLines3);
+        ProcessLines(jsonLines4);
     }
 }
