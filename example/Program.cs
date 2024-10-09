@@ -10,7 +10,9 @@ internal static class Program
 {
     public static void Main()
     {
-        var basePath = "/home/notation/projects/dax/kmd-smile-topology/example";
+        // Insert the base path of the project here example:
+        // /home/myuser/projects/dax/kmd-smile-topology/example
+        var basePath = "";
         var jsonLines1 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_0_intial.jsonl");
         var jsonLines2 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_1_changes.jsonl");
         var jsonLines3 = File.ReadAllLines($"{basePath}/data/smile_topology_delta_2_changes.jsonl");
