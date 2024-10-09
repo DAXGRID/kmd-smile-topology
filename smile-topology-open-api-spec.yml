@@ -32,6 +32,12 @@ components:
           properties:
             kind:
               $ref: '#/components/schemas/EquipmentContainerKind'
+            wgs84longitude:
+              type: number
+              format: double
+            wgs84latitude:
+              type: number
+              format: double
           additionalProperties: false
     EquipmentContainerKind:
       enum:
@@ -129,12 +135,6 @@ components:
               format: int32
             kind:
               $ref: '#/components/schemas/TopologyNodeKind'
-            wgs84longitude:
-              type: number
-              format: double
-            wgs84latitude:
-              type: number
-              format: double
           additionalProperties: false
     TopologyNodeKind:
       enum:
