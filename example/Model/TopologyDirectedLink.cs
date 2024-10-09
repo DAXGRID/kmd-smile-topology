@@ -31,7 +31,7 @@ namespace Example.Model {
     /// </summary>
     [DataMember(Name="switchStatus", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "switchStatus")]
-    public TopologyDirectedLinkSwitchStatusKind SwitchStatus { get; set; }
+    public string SwitchStatus { get; set; }
 
 
     /// <summary>

@@ -31,7 +31,7 @@ namespace Example.Model {
     /// </summary>
     [DataMember(Name="kind", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "kind")]
-    public TopologyNodeKind Kind { get; set; }
+    public string Kind { get; set; }
 
 
     /// <summary>

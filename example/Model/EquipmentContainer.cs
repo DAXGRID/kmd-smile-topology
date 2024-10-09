@@ -17,7 +17,7 @@ namespace Example.Model {
     /// </summary>
     [DataMember(Name="kind", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "kind")]
-    public EquipmentContainerKind Kind { get; set; }
+    public string Kind { get; set; }
 
     /// <summary>
     /// Gets or Sets Wgs84longitude
