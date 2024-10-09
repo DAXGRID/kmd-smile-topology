@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using CIM.PhysicalNetworkModel;
 
 namespace Example.Model {
 
@@ -19,6 +18,7 @@ namespace Example.Model {
     [DataMember(Name="object", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "object")]
     public IdentifiedObject _Object { get; set; }
+
 
     /// <summary>
     /// Get the string presentation of the object

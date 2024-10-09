@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using CIM.PhysicalNetworkModel;
 
 namespace Example.Model {
 
@@ -34,20 +33,6 @@ namespace Example.Model {
     [JsonProperty(PropertyName = "kind")]
     public TopologyNodeKind Kind { get; set; }
 
-    /// <summary>
-    /// Gets or Sets Wgs84longitude
-    /// </summary>
-    [DataMember(Name="wgs84longitude", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "wgs84longitude")]
-    public double? Wgs84longitude { get; set; }
-
-    /// <summary>
-    /// Gets or Sets Wgs84latitude
-    /// </summary>
-    [DataMember(Name="wgs84latitude", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "wgs84latitude")]
-    public double? Wgs84latitude { get; set; }
-
 
     /// <summary>
     /// Get the string presentation of the object
@@ -59,8 +44,6 @@ namespace Example.Model {
       sb.Append("  EquipmentContainer: ").Append(EquipmentContainer).Append("\n");
       sb.Append("  BaseVoltage: ").Append(BaseVoltage).Append("\n");
       sb.Append("  Kind: ").Append(Kind).Append("\n");
-      sb.Append("  Wgs84longitude: ").Append(Wgs84longitude).Append("\n");
-      sb.Append("  Wgs84latitude: ").Append(Wgs84latitude).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }

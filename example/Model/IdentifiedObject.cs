@@ -11,20 +11,27 @@ namespace Example.Model {
   /// 
   /// </summary>
   [DataContract]
-  public class TargetObject {
+  public class IdentifiedObject {
     /// <summary>
-    /// Gets or Sets ReferenceType
+    /// Gets or Sets Type
     /// </summary>
-    [DataMember(Name="referenceType", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "referenceType")]
-    public string ReferenceType { get; set; }
+    [DataMember(Name="$type", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "$type")]
+    public string Type { get; set; }
 
     /// <summary>
-    /// Gets or Sets _Ref
+    /// Gets or Sets MRID
     /// </summary>
-    [DataMember(Name="ref", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "ref")]
-    public string _Ref { get; set; }
+    [DataMember(Name="mRID", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "mRID")]
+    public string MRID { get; set; }
+
+    /// <summary>
+    /// Gets or Sets Name
+    /// </summary>
+    [DataMember(Name="name", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "name")]
+    public string Name { get; set; }
 
 
     /// <summary>
@@ -33,9 +40,10 @@ namespace Example.Model {
     /// <returns>String presentation of the object</returns>
     public override string ToString()  {
       var sb = new StringBuilder();
-      sb.Append("class TargetObject {\n");
-      sb.Append("  ReferenceType: ").Append(ReferenceType).Append("\n");
-      sb.Append("  _Ref: ").Append(_Ref).Append("\n");
+      sb.Append("class IdentifiedObject {\n");
+      sb.Append("  Type: ").Append(Type).Append("\n");
+      sb.Append("  MRID: ").Append(MRID).Append("\n");
+      sb.Append("  Name: ").Append(Name).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
