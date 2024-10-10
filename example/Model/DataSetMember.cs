@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// IEC/CIM change set model class holding a change (an object creation, deletion or modification)
   /// </summary>
   [DataContract]
   public class DataSetMember : IdentifiedObject {

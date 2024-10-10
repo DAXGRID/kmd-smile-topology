@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// IEC/CIM base class that all identified CIM objects must implement
   /// </summary>
   [DataContract]
   public class IdentifiedObject {
@@ -20,11 +20,12 @@ namespace Example.Model {
     public string Type { get; set; }
 
     /// <summary>
-    /// Gets or Sets MRID
+    /// Master Resource Identifier - unique identified as defined by IEC CIM
     /// </summary>
+    /// <value>Master Resource Identifier - unique identified as defined by IEC CIM</value>
     [DataMember(Name="mRID", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "mRID")]
-    public string MRID { get; set; }
+    public Guid? MRID { get; set; }
 
     /// <summary>
     /// Gets or Sets Name

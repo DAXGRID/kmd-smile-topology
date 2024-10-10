@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// SMILE Topology - a container such as a substation or cable box
   /// </summary>
   [DataContract]
   public class EquipmentContainer : IdentifiedObject {

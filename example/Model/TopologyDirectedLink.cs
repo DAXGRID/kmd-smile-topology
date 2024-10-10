@@ -8,23 +8,25 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// SMILE Topology - a directed parent-child link between two topology nodes
   /// </summary>
   [DataContract]
   public class TopologyDirectedLink : IdentifiedObject {
     /// <summary>
-    /// Gets or Sets Parent
+    /// Reference to the parent topology node
     /// </summary>
-    [DataMember(Name="parent", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "parent")]
-    public string Parent { get; set; }
+    /// <value>Reference to the parent topology node</value>
+    [DataMember(Name="Parent", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "Parent")]
+    public Guid? Parent { get; set; }
 
     /// <summary>
-    /// Gets or Sets Child
+    /// Reference to the child topology node
     /// </summary>
-    [DataMember(Name="child", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "child")]
-    public string Child { get; set; }
+    /// <value>Reference to the child topology node</value>
+    [DataMember(Name="Child", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "Child")]
+    public Guid? Child { get; set; }
 
     /// <summary>
     /// Gets or Sets SwitchStatus

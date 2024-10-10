@@ -8,20 +8,22 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// SMILE Topology - a network node such as a network injection, power transforer, busbar node, or start of a feeder
   /// </summary>
   [DataContract]
   public class TopologyNode : IdentifiedObject {
     /// <summary>
-    /// Gets or Sets EquipmentContainer
+    /// Reference to an equipment container containing this topology node
     /// </summary>
-    [DataMember(Name="equipmentContainer", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "equipmentContainer")]
-    public string EquipmentContainer { get; set; }
+    /// <value>Reference to an equipment container containing this topology node</value>
+    [DataMember(Name="EquipmentContainer", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "EquipmentContainer")]
+    public Guid? EquipmentContainer { get; set; }
 
     /// <summary>
-    /// Gets or Sets BaseVoltage
+    /// Base voltage in volts
     /// </summary>
+    /// <value>Base voltage in volts</value>
     [DataMember(Name="baseVoltage", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "baseVoltage")]
     public int? BaseVoltage { get; set; }

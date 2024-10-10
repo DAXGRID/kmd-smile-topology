@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// IEC/CIM change set class containing the state of the object before the change
   /// </summary>
   [DataContract]
   public class ObjectReverseModification : ChangeSetMember {

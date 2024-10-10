@@ -8,16 +8,17 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// SMILE Topology - represents an installation (målerramme)
   /// </summary>
   [DataContract]
   public class UsagePoint : IdentifiedObject {
     /// <summary>
-    /// Gets or Sets TopologyNode
+    /// Reference to the topology node where the installation is connected
     /// </summary>
-    [DataMember(Name="topologyNode", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "topologyNode")]
-    public string TopologyNode { get; set; }
+    /// <value>Reference to the topology node where the installation is connected</value>
+    [DataMember(Name="TopologyNode", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "TopologyNode")]
+    public Guid? TopologyNode { get; set; }
 
 
     /// <summary>

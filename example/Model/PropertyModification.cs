@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Example.Model {
 
   /// <summary>
-  /// 
+  /// IEC/CIM change set class used to hold a property modification
   /// </summary>
   [DataContract]
   public class PropertyModification {
