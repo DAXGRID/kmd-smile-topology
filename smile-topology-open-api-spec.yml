@@ -2,30 +2,114 @@ openapi: 3.0.1
 info:
   title: smile-topology-spec
   version: '1.0'
+  description: SMILE topology component definitions, including definitions used for change set serialization based on the IEC/CIM 61970 change set model
 paths: {}
 components:
   schemas:
-    ChangeSetMember:
+    IdentifiedObject:
+      description: IEC/CIM base class that all identified CIM objects must implement
       type: object
       properties:
         $type:
           type: string
+          nullable: false
+        mRID:
+          description: Master Resource Identifier - unique identified as defined by IEC CIM
+          type: string
+          format: uuid
+          nullable: false
+        name:
+          type: string
+          nullable: true
       additionalProperties: false
+      
     DataSetMember:
+      description: IEC/CIM change set model class holding a change (an object creation, deletion or modification)
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
         - type: object
           properties:
             $type:
               type: string
+              nullable: false
             targetObject:
               type: string
+              nullable: false
             change:
               $ref: '#/components/schemas/ChangeSetMember'
             reverseChange:
               $ref: '#/components/schemas/ObjectReverseModification'
           additionalProperties: false
+          
+    ChangeSetMember:
+      description: IEC/CIM change abstract class
+      type: object
+      properties:
+        $type:
+          type: string
+      additionalProperties: false        
+      
+    ObjectCreation:
+      description: IEC/CIM change set - object creation
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/IdentifiedObject'
+              $type:
+                type: string
+          additionalProperties: false
+          
+    ObjectDeletion:
+      description: IEC/CIM change set - object deletion
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          additionalProperties: false
+          
+    ObjectModification:
+      description: IEC/CIM change set - object modification
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          properties:
+            modifications:
+              type: array
+              items:
+                $ref: '#/components/schemas/PropertyModification'
+                nullable: true
+          additionalProperties: false
+          
+    ObjectReverseModification:
+      description: IEC/CIM change set class containing the state of the object before the change
+      allOf:
+        - $ref: '#/components/schemas/ChangeSetMember'
+        - type: object
+          properties:
+            modifications:
+              type: array
+              items:
+                $ref: '#/components/schemas/PropertyModification'
+                nullable: true
+          additionalProperties: false
+          
+    PropertyModification:
+      description: IEC/CIM change set class used to hold a property modification
+      type: object
+      properties:
+        $type:
+          type: string
+        name:
+          type: string
+          nullable: true
+        value:
+          nullable: true
+      additionalProperties: false
+
+        
     EquipmentContainer:
+      description: SMILE Topology - a container such as a substation or cable box
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
         - type: object
@@ -46,92 +130,22 @@ components:
         - CableBox
         - Tower
       type: string
-    IdentifiedObject:
-      type: object
-      properties:
-        $type:
-          type: string
-        mRID:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ObjectCreation:
-      allOf:
-        - $ref: '#/components/schemas/ChangeSetMember'
-        - type: object
-          properties:
-            object:
-              $ref: '#/components/schemas/IdentifiedObject'
-              $type:
-                type: string
-          additionalProperties: false
-    ObjectDeletion:
-      allOf:
-        - $ref: '#/components/schemas/ChangeSetMember'
-        - type: object
-          additionalProperties: false
-    ObjectModification:
-      allOf:
-        - $ref: '#/components/schemas/ChangeSetMember'
-        - type: object
-          properties:
-            modifications:
-              type: array
-              items:
-                $ref: '#/components/schemas/PropertyModification'
-                nullable: true
-          additionalProperties: false
-    ObjectReverseModification:
-      allOf:
-        - $ref: '#/components/schemas/ChangeSetMember'
-        - type: object
-          properties:
-            modifications:
-              type: array
-              items:
-                $ref: '#/components/schemas/PropertyModification'
-                nullable: true
-          additionalProperties: false
-    PropertyModification:
-      type: object
-      properties:
-        $type:
-          type: string
-        name:
-          type: string
-          nullable: true
-        value:
-          nullable: true
-      additionalProperties: false
-    TopologyDirectedLink:
-      allOf:
-        - $ref: '#/components/schemas/IdentifiedObject'
-        - type: object
-          properties:
-            parent:
-              type: string
-            child:
-              type: string
-            switchStatus:
-              $ref: '#/components/schemas/TopologyDirectedLinkSwitchStatusKind'
-          additionalProperties: false
-    TopologyDirectedLinkSwitchStatusKind:
-      enum:
-        - Normal
-        - Actual
-      type: string
+      
     TopologyNode:
+      description: SMILE Topology - a network node such as a network injection, power transforer, busbar node, or start of a feeder
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
         - type: object
           properties:
-            equipmentContainer:
+            EquipmentContainer:
+              description: Reference to an equipment container containing this topology node
               type: string
+              nullable: false
+              format: uuid
             baseVoltage:
+              description: Base voltage in volts
               type: integer
+              nullable: false
               format: int32
             kind:
               $ref: '#/components/schemas/TopologyNodeKind'
@@ -143,11 +157,40 @@ components:
         - BusbarSection
         - FeederBay
       type: string
-    UsagePoint:
+      
+    TopologyDirectedLink:
+      description: SMILE Topology - a directed parent-child link between two topology nodes
       allOf:
         - $ref: '#/components/schemas/IdentifiedObject'
         - type: object
           properties:
-            topologyNode:
+            Parent:
+              description: Reference to the parent topology node
               type: string
+              nullable: false
+              format: uuid
+            Child:
+              description: Reference to the child topology node
+              type: string
+              nullable: false
+              format: uuid
+            switchStatus:
+              $ref: '#/components/schemas/TopologyDirectedLinkSwitchStatusKind'
+          additionalProperties: false
+    TopologyDirectedLinkSwitchStatusKind:
+      enum:
+        - Normal
+        - Actual
+      type: string
+    UsagePoint:
+      description: SMILE Topology - represents an installation (målerramme)
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedObject'
+        - type: object
+          properties:
+            TopologyNode:
+              description: Reference to the topology node where the installation is connected
+              type: string
+              nullable: false
+              format: uuid
           additionalProperties: false
