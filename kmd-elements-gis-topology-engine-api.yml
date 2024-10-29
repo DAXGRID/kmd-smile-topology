@@ -1,9 +1,18 @@
 openapi: 3.0.3
 info:
-  title: Topology  API
-  x-maintainers: Integration-Team
+  title: KMD.Elements.GisTopology.BFC
+  x-maintainers: Team-04
   description: |-
-    Topology API to be implemented by KMD. The Topology Processor implemented by DAX will call the endpoint get-topology-jobs to get information about which data is ready to be processed. When finished processing the input data, the Topology Processor will call the topology-job-finished endpoint.
+    # KMD Elements Gis Topology BFC
+    Stability level: STABLE
+    <br/>
+    <br/>
+    The **KMD Elements Gis Topology BFC** is part of the KMD Element product.<br/>
+
+    ## Capabilities
+    The API allows to:
+    - get input file upload parameters for existing gis-topology-jobs
+    - get processed file download parameters for existing gis-topology-jobs
 
   termsOfService: "https://www.kmd.net/terms-of-use"
 
@@ -16,43 +25,41 @@ info:
     name: License
     url: "https://www.kmd.net/terms-of-use"
 
-  version: "0.2"
+  version: "1.0"
 
 servers:
-  - url: "https://localhost:16003"
-    description: Localhost
+  - url: "/"
+  - url: "/gis-topology-bfc"
 
 security:
-  - Jwt: []
+  - Jwt: [ ]
 
 tags:
-  - name: GIS Topology
-    description: API that is responsible for maintaining attachments for business objects
+  - name: GisElectricityTopology
+    description: API allowing obtaining electricity gis-topology-jobs and marking them as processed or failed.
 
 paths:
-  /v1/gis-topology/jobs:
+  /bfc/v1/electricity-gis-topology-jobs:
     get:
-      description: Get information on all pending, processed, and failed topology job. Used by the Topology Processor to find the next pending input data to process, including that of finding the last succesfull processed data to be used for diffing (create change set data).
-      summary: Get all jobs
+      description: >-
+        Get information on all new, pending, processed, and failed topology job.
+        Used by the Topology Processor to find the next pending input data to process, including that of finding the last successful processed data to be used for diffing (create change set data).
+      summary: Get all gis-topology-jobs
       operationId: getGisTopologyJobs
-      x-authorization: GIS.read
+      x-authorization: GisTopology.Output.Read
       tags:
-        - GIS Topology
+        - GisElectricityTopology
       parameters:
         - "$ref": "#/components/parameters/CorrelationIdInHeader"
         - "$ref": "#/components/parameters/MessageIdInHeader"
-        - "$ref": "#/components/parameters/SequenceNumberInQuery"
+        - "$ref": "#/components/parameters/FromInputFileUploadedTimeInQuery"
       responses:
         '200':
-          description: List of all topology jobs
+          description: List of all topology gis-topology-jobs
           content:
             application/json:
               schema:
-                description: List of all topology jobs
-                type: array
-                maxItems: 50
-                items:
-                    $ref: '#/components/schemas/TopologyJob'
+                $ref: '#/components/schemas/ElectricityGisTopologyJobsCollectionResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -72,14 +79,14 @@ paths:
         '504':
           $ref: '#/components/responses/504'
 
-  /v1/gis-topology/jobs/{jobId}/request-input-data-url:
+  /bfc/v1/electricity-gis-topology-jobs/{jobId}/input-data-blob-storage-url:
     get:
-      description: Get input blog storage urls for a specific topology job
+      description: Get input blob storage urls for a specific topology job
       summary: Request input data url
-      x-authorization: GIS.read
+      x-authorization: GisTopology.Output.Read
       operationId: getInputDataUrlByJobId
       tags:
-        - GIS Topology
+        - GisElectricityTopology
       parameters:
         - "$ref": "#/components/parameters/CorrelationIdInHeader"
         - "$ref": "#/components/parameters/MessageIdInHeader"
@@ -90,60 +97,7 @@ paths:
           content:
             application/json:
               schema:
-                description: Blob storage urls
-                type: object
-                properties:
-                  inputDataBlobStorageUrl:
-                    type: string
-                    pattern: ""
-                    maxLength: 256
-                    nullable: false
-                    description: Topology Processor input. Blob storage url to the CIM archive (Zipped data) container the CIM files (equipment.xml, asset.xml, measurement.xml) the tenant has uploaded.
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '499':
-          $ref: '#/components/responses/499'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
-        '504':
-          $ref: '#/components/responses/504'
-  /v1/gis-topology/jobs/{jobId}/request-output-data-url:
-    get:
-      description: Get  output blog storage urls for a specific topology job
-      summary: Request output data url
-      x-authorization: GIS.read
-      operationId: getOutputDataUrlByJobId
-      tags:
-        - GIS Topology
-      parameters:
-        - "$ref": "#/components/parameters/CorrelationIdInHeader"
-        - "$ref": "#/components/parameters/MessageIdInHeader"
-        - "$ref": "#/components/parameters/JobIdInPath"
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                description: Blob storage urls
-                type: object
-                properties:
-                  outputDataBlobStorageUrl:
-                    type: string
-                    nullable: false
-                    pattern: ""
-                    maxLength: 256
-                    description: "Topology Processor output. Blob storage url where the topology processor should put the result of its processing. If the input data was processed successfully the result will be a zip archive containing: A full SMILE topology dataset in geojson file, a SMILE topology diff/changeset file in json format, and various files with error/validating result for the tenant to use for data cleansing and fault finding. If the job failed, the archive will only contain error/validating files."
+                $ref: '#/components/schemas/InputDataBlobStorageUrlResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -163,43 +117,61 @@ paths:
         '504':
           $ref: '#/components/responses/504'
 
-  /v1/gis-topology/jobs/{jobId}/finished:
-    post:
-      description: Called by the topology processor when the job is processed. The Topology API must update the the underlying job information with the new status and set finishedProcessingTime to current datetime. Moreover the Topology API must synchronize this call with the get-topology-jobs call. That is, the status must immediately be reflected in the get-topology-jobs response, efter this call has returned ok.
-      summary: Publish that the job is finished.
-      x-authorization: GIS.read
-      operationId: publishJobFinished
+  /bfc/v1/electricity-gis-topology-jobs/{jobId}/output-data-blob-storage-url:
+    get:
+      description: Get output blob storage urls for a specific topology job
+      summary: Request output data url
+      x-authorization: GisTopology.Output.Read
+      operationId: getOutputDataUrlByJobId
       tags:
-        - GIS Topology
+        - GisElectricityTopology
       parameters:
         - "$ref": "#/components/parameters/CorrelationIdInHeader"
         - "$ref": "#/components/parameters/MessageIdInHeader"
         - "$ref": "#/components/parameters/JobIdInPath"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutputDataBlobStorageUrlResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '499':
+          $ref: '#/components/responses/499'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        '504':
+          $ref: '#/components/responses/504'
+
+  /bfc/v1/electricity-gis-topology-jobs/commands/set-job-status:
+    post:
+      description: Called by the topology processor when the job is processed. The Topology API must update the the underlying job information with the new status and set finishedProcessingTime to current datetime. Moreover the Topology API must synchronize this call with the get-topology-gis-topology-jobs call. That is, the status must immediately be reflected in the get-topology-gis-topology-jobs response, efter this call has returned ok.
+      summary: Publish that the job is finished.
+      x-authorization: GisTopology.Output.Write
+      operationId: setJobStatus
+      tags:
+        - GisElectricityTopology
+      parameters:
+        - "$ref": "#/components/parameters/CorrelationIdInHeader"
+        - "$ref": "#/components/parameters/MessageIdInHeader"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                jobId:
-                  type: string
-                  format: uuid
-                  nullable: false
-                  description: Id of the job that has been processed
-                status:
-                  type: string
-                  enum: [PROCESSED, FAILED]
-                  nullable: false
-                  description: After the topology processer has finished processing the job, the status will be either PROCESSED og FAILED.
-                failedReason:
-                  type: string
-                  pattern: ""
-                  maxLength: 100
-                  nullable: true
-                  description: Short description why the job failed - i.e. CIM Shema Validation Failed, Dublicated CIM ids...
-
-
+              $ref: '#/components/schemas/SetJobStatusRequest'
       responses:
         '202':
           $ref: '#/components/responses/202'
@@ -224,32 +196,105 @@ paths:
 
 components:
   schemas:
-    TopologyJob:
+    ElectricityGisTopologyJobsCollectionResponse:
+      description: List of all topology gis-topology-jobs
+      type: array
+      maxItems: 100
+      items:
+        $ref: '#/components/schemas/TopologyJob'
+
+    InputDataBlobStorageUrlResponse:
+      description: Input data blob storage url
       type: object
-      nullable: true
-      description: Structure holding information about a topology job, including urls to blob storage and its status
+      additionalProperties: false
+      required:
+        - inputDataBlobStorageUrl
       properties:
-        id:
+        inputDataBlobStorageUrl:
+          description: Topology Processor input. Blob storage url to the CIM archive (Zipped data) container the CIM files (equipment.xml, asset.xml, measurement.xml) the tenant has uploaded.
+          type: string
+          nullable: false
+          pattern: "^.*$"
+          maxLength: 1000
+          example: 'https://sample-storage-account-name-eba822f3-2f08-466d-987e-59a3ab3c6bc2.blob.core.windows.net/1/input-files/9a896013-836e-4854-aa15-ee3e16384aa0.zip?sv=2020-08-04&ss=b&srt=sco&sp=rwdlacupx&se=2024-10-31T23:59:59Z&st=2024-10-17T00:00:00Z&spr=https&sig=abc123%2Fdef456%2Fghi789%3D'
+
+    OutputDataBlobStorageUrlResponse:
+      description: Output data blob storage url
+      type: object
+      additionalProperties: false
+      required:
+        - outputDataBlobStorageUrl
+      properties:
+        outputDataBlobStorageUrl:
+          type: string
+          nullable: false
+          pattern: "^.*$"
+          maxLength: 1000
+          description: >-
+            Topology Processor output. Blob storage url where the topology processor should put the result of its processing.
+            If the input data was processed successfully the result will be a zip archive containing:
+              A full SMILE topology dataset in geojson file, a SMILE topology diff/changeset file in json format, and various files with error/validating result for the tenant to use for data cleansing and fault finding.
+            If the job failed, the archive will only contain error/validating files."
+          example: 'https://FAKE-storage-account-name-eba822f3-2f08-466d-987e-59a3ab3c6bc2.blob.core.windows.net/1/output-files/9a896013-836e-4854-aa15-ee3e16384aa0.zip?sv=2020-08-04&ss=b&srt=sco&sp=rwdlacupx&se=2024-10-31T23:59:59Z&st=2024-10-17T00:00:00Z&spr=https&sig=abc123%2Fdef456%2Fghi789%3D'
+
+    SetJobStatusRequest:
+      type: object
+      additionalProperties: false
+      description: Command allowing to set Job status to "Processed" or "Failed" with "FailedReason".
+      required:
+        - jobId
+        - status
+      properties:
+        jobId:
           type: string
           format: uuid
           nullable: false
-          description: Unique id (uuid) generated when topology job is requested by the tenant (netselskab). It is used as correlation id between the get-topology-jobs and topology-job-finished calls
-        seqNo:
-          type: integer
-          format: int32
-          nullable: false
-          minimum: 0
-          maximum: 2147483647
-          description: Sequence number that should be incremented everytime a topology job is inserted in the list - i.e. everytime the tenant sends a new set of CIM data to be topology processed. The sequence number is used for ordering and to catch up eventually missing outputs.
+          description: Id of the job that has been processed
+          example: 23751a83-cae9-44eb-b3ff-50ca1e15c1b8
         status:
           type: string
-          enum: [PENDING, PROCESSED, FAILED]
+          enum: [ Processed, Failed ]
           nullable: false
-          description: When the job is added to the list, status should always initially be set to PENDING. After the topology processor has finished processing the job, the status is updated to either PROCESSED og FAILED. The job will be set to FAILED if the data from the tenant is invalid (i.e. CIM schema validating fails) or validating thresholds fails. Jobs with the status FAILED will not be used in the diff (change set data) process.
+          description: After the topology processor has finished processing the job, the status will be either Processed og Failed.
+          example: Processed
+        failedReason:
+          type: string
+          pattern: "^.*$"
+          maxLength: 100
+          nullable: true
+          description: Short description why the job failed - i.e. CIM Schema Validation Failed, Duplicated CIM ids...
+          example: CIM Schema Validation Failed
+
+    TopologyJob:
+      description: Structure holding information about a topology job, including urls to blob storage and its status
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - status
+        - createdTime
+      properties:
+        id:
+          description: Unique id (uuid) generated when topology job is requested by the tenant (netselskab). It is used as correlation id between the get-topology-gis-topology-jobs and topology-job-finished calls
+          type: string
+          format: uuid
+          nullable: false
+          example: 23751a83-cae9-44eb-b3ff-50ca1e15c1b8
+        status:
+          type: string
+          enum: [ New, Pending, Processed, Failed ]
+          nullable: false
+          description: When the job is added to the list, status should always initially be set to Pending. After the topology processor has finished processing the job, the status is updated to either Processed og Failed. The job will be set to Failed if the data from the tenant is invalid (i.e. CIM schema validating fails) or validating thresholds fails. Jobs with the status Failed will not be used in the diff (change set data) process.
         createdTime:
           type: string
           format: date-time
           nullable: false
+          example: '2024-09-13T10:12:44Z'
+          description: The time when the job was created - first request for input file url.
+        inputFileUploadedTime:
+          type: string
+          format: date-time
+          nullable: true
           example: '2024-09-13T10:12:44Z'
           description: The time when the tenant has uploaded the input data
         finishedProcessingTime:
@@ -258,6 +303,51 @@ components:
           nullable: true
           example: '2024-09-13T10:22:44Z'
           description: The time when Topology Processor has finished processing the input data. Will initially be null. The Topology API will update this field with current datetime when the topology processor calls topology-job-finished.
+        files:
+          type: array
+          nullable: true
+          description: A list of files contained in this job.
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/TopologyFile'
+          example:
+            [
+              {
+                "fileType": "AssetFile",
+                "fileName": "gis_assets_20240606124401_01.xml"
+              },
+              {
+                "fileType": "EquipmentFile",
+                "fileName": "gis_equipment_20240606124401_01.xml"
+              },
+              {
+                "fileType": "MeasurementFile",
+                "fileName": "gis_measurement_20240606124401_01.xml"
+              }
+            ]
+
+    TopologyFile:
+      description: Defines the file.
+      type: object
+      additionalProperties: false
+      properties:
+        fileType:
+          type: string
+          description: The type of file.
+          pattern: "^(AssetFile|EquipmentFile|MeasurementFile|UpsertFile|DeleteFile)$"
+          maxLength: 20
+          example: AssetFile
+        fileName:
+          type: string
+          description: The name of the file.
+          pattern: "^.*$"
+          maxLength: 100
+          example: gis_assets_20240606124401_01.xml
+      example:
+        {
+          "fileType": "AssetFile",
+          "fileName": "gis_assets_20240606124401_01.xml"
+        }
 
     ProblemDetails:
       title: ProblemDetails
@@ -310,6 +400,7 @@ components:
           nullable: true
           maxLength: 200
           example: /resources/1
+
     ValidationProblemDetails:
       title: ValidationProblemDetails
       description: >-
@@ -334,38 +425,54 @@ components:
               nullable: true
               maxProperties: 100
 
+    DateTimeNullable:
+      type: string
+      nullable: true
+      description: DateTime Nullable.
+      format: date-time
+      example: "2023-07-01T22:00:00Z"
+
+    Guid:
+      type: string
+      description: GUID field.
+      format: uuid
+      example: 23751a83-cae9-44eb-b3ff-50ca1e15c1b8
+
+    GuidNullable:
+      nullable: true
+      type: string
+      description: GUID nullable field.
+      format: uuid
+      example: 23751a83-cae9-44eb-b3ff-50ca1e15c1b8
+
   parameters:
     JobIdInPath:
       in: path
       name: jobId
-      description: Id to identify the job
+      description: Id to identify the job - Id of the job that has been processed.
       required: true
       schema:
-        type: string
-        format: uuid
-        description: Id of the job that has been processed
+        $ref: '#/components/schemas/Guid'
       example: '3773907e-45a2-11ee-be56-0242ac120003'
-    SequenceNumberInQuery:
-      in: query
-      description: Returns all jobs with a sequence number greather that fromSequenceNumber. If parameter is not specified then all jobs are returned.
-      name: fromSequenceNumber
-      required: false
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 2147483647
-      example: 1
+
     MessageIdInHeader:
       name: es-message-id
       description: Unique message ID. The same message id is used when resending the
         message.
       in: header
       schema:
-        type: string
-        format: uuid
+        $ref: '#/components/schemas/GuidNullable'
       example: '3773907e-45a2-11ee-be56-0242ac120003'
       required: true
+
+    FromInputFileUploadedTimeInQuery:
+      name: fromInputFileUploadedTime
+      in: query
+      description: From Input file uploaded time (the time when the tenant has uploaded the input data) filter.
+      schema:
+        $ref: '#/components/schemas/DateTimeNullable'
+      example: '2024-09-13T10:12:44Z'
+
     CorrelationIdInHeader:
       name: es-correlation-id
       description: |
@@ -378,8 +485,7 @@ components:
         it may be reused on more than one message.
       in: header
       schema:
-        type: string
-        format: uuid
+        $ref: '#/components/schemas/Guid'
       example: '3773907e-45a2-11ee-be56-0242ac120004'
       required: true
 
@@ -517,7 +623,6 @@ components:
     Jwt:
       description: >-
         JWT Authorization header using the Bearer scheme.
-
         Example:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
       type: http
