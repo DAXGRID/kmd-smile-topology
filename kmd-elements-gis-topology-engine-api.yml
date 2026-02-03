@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: KMD.Elements.GisTopology.BFC
-  x-maintainers: Team-04
+  x-maintainers: Team-MD-2
   description: |-
     # KMD Elements Gis Topology BFC
     Stability level: STABLE
@@ -28,8 +28,9 @@ info:
   version: "1.0"
 
 servers:
-  - url: "/"
+  - url: "/bfc"
   - url: "/gis-topology-bfc"
+  - url: "/api/gis-topology/bfc"
 
 security:
   - Jwt: [ ]
@@ -39,7 +40,7 @@ tags:
     description: API allowing obtaining electricity gis-topology-jobs and marking them as processed or failed.
 
 paths:
-  /bfc/v1/electricity-gis-topology-jobs:
+  /v1/electricity-gis-topology-jobs:
     get:
       description: >-
         Get information on all new, pending, processed, and failed topology job.
@@ -68,6 +69,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
         '499':
@@ -79,7 +82,7 @@ paths:
         '504':
           $ref: '#/components/responses/504'
 
-  /bfc/v1/electricity-gis-topology-jobs/{jobId}/input-data-blob-storage-url:
+  /v1/electricity-gis-topology-jobs/{jobId}/input-data-blob-storage-url:
     get:
       description: Get input blob storage urls for a specific topology job
       summary: Request input data url
@@ -106,6 +109,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
         '499':
@@ -117,7 +122,7 @@ paths:
         '504':
           $ref: '#/components/responses/504'
 
-  /bfc/v1/electricity-gis-topology-jobs/{jobId}/output-data-blob-storage-url:
+  /v1/electricity-gis-topology-jobs/{jobId}/output-data-blob-storage-url:
     get:
       description: Get output blob storage urls for a specific topology job
       summary: Request output data url
@@ -144,6 +149,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
         '499':
@@ -155,7 +162,7 @@ paths:
         '504':
           $ref: '#/components/responses/504'
 
-  /bfc/v1/electricity-gis-topology-jobs/commands/set-job-status:
+  /v1/electricity-gis-topology-jobs/commands/set-job-status:
     post:
       description: Called by the topology processor when the job is processed. The Topology API must update the the underlying job information with the new status and set finishedProcessingTime to current datetime. Moreover the Topology API must synchronize this call with the get-topology-gis-topology-jobs call. That is, the status must immediately be reflected in the get-topology-gis-topology-jobs response, efter this call has returned ok.
       summary: Publish that the job is finished.
@@ -183,6 +190,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
         '499':
@@ -289,19 +298,19 @@ components:
           type: string
           format: date-time
           nullable: false
-          example: '2024-09-13T10:12:44Z'
+          example: '2024-10-30T09:35:18.151Z'
           description: The time when the job was created - first request for input file url.
         inputFileUploadedTime:
           type: string
           format: date-time
           nullable: true
-          example: '2024-09-13T10:12:44Z'
+          example: '2024-10-30T09:35:18.151Z'
           description: The time when the tenant has uploaded the input data
         finishedProcessingTime:
           type: string
           format: date-time
           nullable: true
-          example: '2024-09-13T10:22:44Z'
+          example: '2024-10-30T09:35:18.151Z'
           description: The time when Topology Processor has finished processing the input data. Will initially be null. The Topology API will update this field with current datetime when the topology processor calls topology-job-finished.
         files:
           type: array
@@ -430,7 +439,7 @@ components:
       nullable: true
       description: DateTime Nullable.
       format: date-time
-      example: "2023-07-01T22:00:00Z"
+      example: "2024-10-30T09:35:18.151Z"
 
     Guid:
       type: string
@@ -463,7 +472,7 @@ components:
       schema:
         $ref: '#/components/schemas/GuidNullable'
       example: '3773907e-45a2-11ee-be56-0242ac120003'
-      required: true
+      required: false
 
     FromInputFileUploadedTimeInQuery:
       name: fromInputFileUploadedTime
@@ -471,7 +480,7 @@ components:
       description: From Input file uploaded time (the time when the tenant has uploaded the input data) filter.
       schema:
         $ref: '#/components/schemas/DateTimeNullable'
-      example: '2024-09-13T10:12:44Z'
+      example: '2024-10-30T09:35:18.151Z'
 
     CorrelationIdInHeader:
       name: es-correlation-id
@@ -554,6 +563,20 @@ components:
                 title: Not Found
                 status: 404
                 detail: Not Found
+                instance: /resources/1
+    '422':
+      description: 422 Unprocessable.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                type: https://errors.kmdelements.com/422
+                title: Unprocessable
+                status: 422
+                detail: Unprocessable
                 instance: /resources/1
     '429':
       description: 429 Too Many Requests
